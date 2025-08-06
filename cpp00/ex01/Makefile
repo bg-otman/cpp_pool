@@ -1,5 +1,5 @@
 CC = c++
-CCFLAGS = -std=c++98 -Wall -Wextra #-Werror
+CCFLAGS = -std=c++98 -Wall -Wextra -Werror
 SRCS = main.cpp phonebook.cpp contact.cpp
 OBJS = $(SRCS:.cpp=.o)
 INCLUDES = PhoneBook.hpp Contact.hpp
