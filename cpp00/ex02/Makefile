@@ -1,15 +1,16 @@
 CC = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRCS = megaphone.cpp
+SRCS = Account.cpp tests.cpp
 OBJS = $(SRCS:.cpp=.o)
-NAME = megaphone
+INCLUDES = Account.hpp
+NAME = Account
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o : %.cpp
+%.o : %.cpp $(INCLUDES)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
