@@ -27,8 +27,6 @@ int main()
 	PhoneBook	phone_book;
 	string		cmd;
 
-	phone_book.index = 0;
-	phone_book.count = 0;
 	while (true)
 	{
 		get_input("Available Commands : ADD, SEARCH, EXIT\n>> ", &cmd, true);

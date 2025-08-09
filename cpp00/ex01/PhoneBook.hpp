@@ -5,11 +5,14 @@
 
 class PhoneBook
 {
-	public:
+	private:
 		Contact	contacts[8];
 		int		index;
 		int		count;
-
+		
+	public:
+		PhoneBook();
+		
 		void	add_contact();
 		void	search_contact();
 };

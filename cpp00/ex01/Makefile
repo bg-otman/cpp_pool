@@ -1,5 +1,5 @@
 CC = c++
-CCFLAGS = -std=c++98 -Wall -Wextra -Werror
+CFLAGS = -std=c++98 -Wall -Wextra -Werror
 SRCS = main.cpp phonebook.cpp contact.cpp
 OBJS = $(SRCS:.cpp=.o)
 INCLUDES = PhoneBook.hpp Contact.hpp
@@ -8,10 +8,10 @@ NAME =  phonebook
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	@$(CC) $(CCFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 %.o : %.cpp $(INCLUDES)
-	@$(CC) $(CCFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
 	@rm -f $(OBJS)

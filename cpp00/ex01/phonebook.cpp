@@ -1,22 +1,47 @@
 #include "PhoneBook.hpp"
 
+PhoneBook::PhoneBook()
+{
+	count = 0;
+	index = 0;
+}
+
+void get_phone_num(string *tmp)
+{
+	bool nan = false;
+
+	while (true)
+	{
+		get_input("Phone Number : ", tmp, false);
+		for (int i = 0; (*tmp)[i]; i++)
+		{
+			if (!isdigit((*tmp)[i])) nan = true;
+		}
+		if (nan)
+			cout << "❌Invalid Phone Number!❌\n";
+		else
+			break;
+		nan = false;
+	}
+}
+
 void PhoneBook::add_contact()
 {
 	string tmp;
 
 	get_input("First name : ", &tmp, false);
-	PhoneBook::contacts[PhoneBook::index].set_first_name(tmp);
+	contacts[index].set_first_name(tmp);
 	get_input("Last name : ", &tmp, false);
-	PhoneBook::contacts[PhoneBook::index].set_last_name(tmp);
+	contacts[index].set_last_name(tmp);
 	get_input("Nick name : ", &tmp, false);
-	PhoneBook::contacts[PhoneBook::index].set_nick_name(tmp);
+	contacts[index].set_nick_name(tmp);
 	get_input("Darkest Secret : ", &tmp, false);
-	PhoneBook::contacts[PhoneBook::index].set_secret(tmp);
-	get_input("Phone Number : ", &tmp, false);
-	PhoneBook::contacts[PhoneBook::index].set_num(tmp);
+	contacts[index].set_secret(tmp);
+	get_phone_num(&tmp);
+	contacts[index].set_num(tmp);
 	
-	PhoneBook::index < 7 ? PhoneBook::index++ : PhoneBook::index = 0; // pointing to next free spot or back to the old one
-	if (PhoneBook::count < 8) PhoneBook::count++;
+	index < 7 ? index++ : index = 0; // pointing to next free spot or back to the old one
+	if (count < 8) count++;
 }
 
 void	display_contacts(Contact contacts[], int contact_num)
@@ -32,7 +57,7 @@ void	display_contacts(Contact contacts[], int contact_num)
 	for (int i = 0; i < contact_num; i++)
 	{
 		cout << std::right << std::setw(20) << i + 1;
-		contacts[i].get_info(contacts[i]);
+		contacts[i].get_info();
 	}
 	cout << "\n";
 }
@@ -40,25 +65,25 @@ void	display_contacts(Contact contacts[], int contact_num)
 void	PhoneBook::search_contact()
 {
 	string	tmp;
-	int 	index = -1;
+	int 	i = -1;
 
-	if (PhoneBook::count == 0)
+	if (count == 0)
 		cout << "No contact Found!, Try add One :)\n";
 	else
 	{
-		while (index <= 0 || index > PhoneBook::count)
+		while (i <= 0 || i > count)
 		{
-			display_contacts(PhoneBook::contacts, PhoneBook::count);
+			display_contacts(contacts, count);
 			get_input("Choose a contact OR type QUIT to go back : ", &tmp, false);
 			if (tmp.compare("QUIT") == 0)
 				break;
-			index = get_index(tmp);
-			if (index <= 0 || index > PhoneBook::count)
+			i = get_index(tmp);
+			if (i <= 0 || i > count)
 			{
 				cout << "❌Invalid Index❌\n\n";
 				continue;
 			}
-			PhoneBook::contacts[index - 1].get_data(PhoneBook::contacts[index - 1]);
+			contacts[i - 1].get_data();
 			cout << "\n";
 			break;
 		}

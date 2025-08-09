@@ -18,17 +18,11 @@ class Contact
 		string	nick_name;
 		string	secret;
 		string	phone_num;
-	
-	public:
-		void	get_info(Contact contact);
-		void	get_data(Contact contact); // print detailled infos
 		
-		// getters
-		string	get_first_name(void) { return first_name; }
-		string	get_last_name(void) { return last_name; }
-		string	get_nick_name(void) { return nick_name; }
-		string	get_secret(void) { return secret; }
-		string	get_num(void) { return phone_num; }
+		
+	public:
+		void	get_info(void) const;
+		void	get_data(void) const; // print detailled infos
 
 		// setters
 		void	set_first_name(string s) { first_name = s; }
