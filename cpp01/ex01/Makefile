@@ -14,12 +14,10 @@ $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-# 	@rm -f $(OBJS)
-	@del  $(OBJS)
+	@rm -f $(OBJS)
 
 fclean : clean
-# 	@rm -f $(NAME)
-	@del  $(NAME:=.exe)
+	@rm -f $(NAME)
 
 re : fclean all
 

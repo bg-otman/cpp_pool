@@ -17,7 +17,7 @@ class PhoneBook
 		void	search_contact();
 };
 
-void	get_input(string prompt, string *buffer, bool allow_empty);
-int		get_index(string str_num);
+void	get_input(std::string prompt, std::string *buffer, bool allow_empty);
+int		get_index(std::string str_num);
 
 #endif

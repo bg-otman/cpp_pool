@@ -6,7 +6,7 @@ PhoneBook::PhoneBook()
 	index = 0;
 }
 
-void get_phone_num(string *tmp)
+void get_phone_num(std::string *tmp)
 {
 	bool nan = false;
 
@@ -18,7 +18,7 @@ void get_phone_num(string *tmp)
 			if (!isdigit((*tmp)[i])) nan = true;
 		}
 		if (nan)
-			cout << "❌Invalid Phone Number!❌\n";
+			std::cout << "❌Invalid Phone Number!❌\n";
 		else
 			break;
 		nan = false;
@@ -27,7 +27,7 @@ void get_phone_num(string *tmp)
 
 void PhoneBook::add_contact()
 {
-	string tmp;
+	std::string tmp;
 
 	get_input("First name : ", &tmp, false);
 	contacts[index].set_first_name(tmp);
@@ -46,7 +46,7 @@ void PhoneBook::add_contact()
 
 void	display_contacts(Contact contacts[], int contact_num)
 {
-	cout << "\033[31m"
+	std::cout << "\033[31m"
      << std::right
      << std::setw(20) << "Index"
      << "|" << std::setw(10) << "FirstName"
@@ -56,19 +56,19 @@ void	display_contacts(Contact contacts[], int contact_num)
 
 	for (int i = 0; i < contact_num; i++)
 	{
-		cout << std::right << std::setw(20) << i + 1;
+		std::cout << std::right << std::setw(20) << i + 1;
 		contacts[i].get_info();
 	}
-	cout << "\n";
+	std::cout << "\n";
 }
 
 void	PhoneBook::search_contact()
 {
-	string	tmp;
+	std::string	tmp;
 	int 	i = -1;
 
 	if (count == 0)
-		cout << "No contact Found!, Try add One :)\n";
+		std::cout << "No contact Found!, Try add One :)\n";
 	else
 	{
 		while (i <= 0 || i > count)
@@ -80,11 +80,11 @@ void	PhoneBook::search_contact()
 			i = get_index(tmp);
 			if (i <= 0 || i > count)
 			{
-				cout << "❌Invalid Index❌\n\n";
+				std::cout << "❌Invalid Index❌\n\n";
 				continue;
 			}
 			contacts[i - 1].get_data();
-			cout << "\n";
+			std::cout << "\n";
 			break;
 		}
 	}

@@ -1,6 +1,5 @@
 #include "Zombie.hpp"
 
-
 int main()
 {
     Zombie *allocatd_zom = newZombie("Allocated_zombie");

@@ -1,16 +1,15 @@
 CC = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRCS = main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
+SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
-INCLUDES = Zombie.hpp
-NAME = BraiiiiiiinnnzzzZ
+NAME = Reference
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o : %.cpp $(INCLUDES)
+%.o : %.cpp
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :

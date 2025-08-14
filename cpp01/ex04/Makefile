@@ -1,9 +1,9 @@
 CC = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRCS = main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
+SRCS = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
 OBJS = $(SRCS:.cpp=.o)
-INCLUDES = Zombie.hpp
-NAME = BraiiiiiiinnnzzzZ
+INCLUDES = Weapon.hpp HumanB.hpp HumanA.hpp
+NAME = Weapon
 
 all : $(NAME)
 

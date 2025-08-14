@@ -6,30 +6,25 @@
 #include <stdlib.h>
 #include <iomanip>
 
-using std::cout;
-using std::cin;
-using std::string;
-
 class Contact
 {
 	private:
-		string	first_name;
-		string	last_name;
-		string	nick_name;
-		string	secret;
-		string	phone_num;
-		
+		std::string	first_name;
+		std::string	last_name;
+		std::string	nick_name;
+		std::string	secret;
+		std::string	phone_num;
 		
 	public:
 		void	get_info(void) const;
 		void	get_data(void) const; // print detailled infos
 
 		// setters
-		void	set_first_name(string s) { first_name = s; }
-		void	set_last_name(string s) { last_name = s; }
-		void	set_nick_name(string s) { nick_name = s; }
-		void	set_secret(string s) { secret = s; }
-		void	set_num(string s) { phone_num = s; }
+		void	set_first_name(std::string s);
+		void	set_last_name(std::string s);
+		void	set_nick_name(std::string s);
+		void	set_secret(std::string s);
+		void	set_num(std::string s);
 };
 
 #endif

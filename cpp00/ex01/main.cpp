@@ -1,18 +1,18 @@
 #include "PhoneBook.hpp"
 
-void get_input(string prompt, string *buffer, bool allow_empty)
+void get_input(std::string prompt, std::string *buffer, bool allow_empty)
 {
 	while (true)
 	{
-		cout << prompt;
-		getline(cin, *buffer);
+		std::cout << prompt;
+		getline(std::cin, *buffer);
 		if (allow_empty || !((*buffer).empty()))
 			break;
-		cout << "field can't be empty!\n";
+		std::cout << "field can't be empty!\n";
 	}
 }
 
-int get_index(string str_num)
+int get_index(std::string str_num)
 {
 	for (int i = 0; str_num[i]; i++)
 	{
@@ -24,8 +24,8 @@ int get_index(string str_num)
 
 int main()
 {
-	PhoneBook	phone_book;
-	string		cmd;
+	PhoneBook		phone_book;
+	std::string		cmd;
 
 	while (true)
 	{
