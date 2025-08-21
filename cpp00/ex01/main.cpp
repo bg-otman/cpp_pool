@@ -8,7 +8,10 @@ void get_input(std::string prompt, std::string *buffer, bool allow_empty)
 		getline(std::cin, *buffer);
 		if (allow_empty || !((*buffer).empty()))
 			break;
-		std::cout << "field can't be empty!\n";
+		else if (std::cin.eof())
+			exit(1);
+		else
+			std::cout << "field can't be empty!\n";
 	}
 }
 
@@ -36,6 +39,8 @@ int main()
 			phone_book.add_contact();
 		else if (cmd.compare("SEARCH") == 0)
 			phone_book.search_contact();
+		else
+			break;
 	}
 	return 0;
 }

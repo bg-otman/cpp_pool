@@ -1,15 +1,16 @@
 CC = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRCS = main.cpp
+SRCS = main.cpp Harl.cpp
 OBJS = $(SRCS:.cpp=.o)
-NAME = replace
+INCLUDES = Harl.hpp
+NAME = harl
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o : %.cpp
+%.o : %.cpp $(INCLUDES)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
