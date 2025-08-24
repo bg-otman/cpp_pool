@@ -8,17 +8,19 @@ NAME = BraiiiiiiinnnzzzZ
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 %.o : %.cpp $(INCLUDES)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-	@rm -f $(OBJS)
+	rm -f $(OBJS)
 
 fclean : clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re : fclean all
 
 .PHONY : clean
+
+.SECONDARY : $(OBJS)

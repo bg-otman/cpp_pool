@@ -51,7 +51,7 @@ void	display_contacts(Contact contacts[], int contact_num)
      << std::setw(20) << "Index"
      << "|" << std::setw(10) << "FirstName"
      << "|" << std::setw(10) << "LastName"
-     << "|" << std::setw(10) << "NickName|"
+     << "|" << std::setw(10) << "  NickName|"
      << "\033[0m" << "\n";
 
 	for (int i = 0; i < contact_num; i++)

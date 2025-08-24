@@ -11,18 +11,12 @@ void put_error(const char *msg)
 
 std::string replace_str(std::string& line, const std::string& searchWord, const std::string& replaceWord, int index)
 {
-	int i = index, j = 0;
+	int i;
 	std::string new_line;
 
-	while (line[i])
-	{
-		if (searchWord[j] != line[i])
-			break;
-		i++;
-		j++;
-	}
 	new_line = line.substr(0, index);
 	new_line.append(replaceWord);
+	i = index + searchWord.length();
 	new_line.append(line.substr(i));
 
 	return new_line;
@@ -48,8 +42,8 @@ int main(int ac, char *av[])
 	}
 	
 	std::string buffer;
-	std::string::size_type index;
-	std::string::size_type start_pos;
+	size_t index;
+	size_t start_pos;
 
 	while (getline(in_file, buffer))
 	{
