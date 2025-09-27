@@ -1,9 +1,9 @@
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp Fixed.cpp
+SRCS = main.cpp Point.cpp bsp.cpp Fixed.cpp
 OBJS = $(SRCS:.cpp=.o)
-INCLUDES = Fixed.hpp
-NAME = a.out
+INCLUDES = Fixed.hpp Point.hpp
+NAME = BSP
 
 all : $(NAME)
 
