@@ -28,3 +28,14 @@ Brain::~Brain()
 {
     std::cout << "Brain Destructor Called" << std::endl;
 }
+
+std::string	Brain::getIdea( size_t index ) const
+{
+    return index < 100 ? ideas[index] : "";
+}
+
+void  Brain::setIdea( size_t index, std::string idea )
+{
+    if (index < 100)
+        ideas[index] = idea;
+}

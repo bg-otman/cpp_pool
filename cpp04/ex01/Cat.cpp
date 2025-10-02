@@ -11,7 +11,6 @@ Cat::Cat(const Cat& obj)
     : Animal(obj), brain(new Brain(*obj.brain))
 {
     std::cout << "Cat Copy Constructor Called" << std::endl;
-    *this = obj;
 }
 
 Cat& Cat::operator=(const Cat& obj)
@@ -40,4 +39,9 @@ void Cat::makeSound() const
 std::string Cat::getType() const
 {
     return type;
+}
+
+Brain* Cat::getBrain( void )
+{
+    return brain;
 }

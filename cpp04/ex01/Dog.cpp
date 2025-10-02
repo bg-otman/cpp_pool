@@ -11,7 +11,6 @@ Dog::Dog(const Dog& obj)
     : Animal(obj), brain(new Brain(*obj.brain))
 {
     std::cout << "Dog Copy Constructor Called" << std::endl;
-    *this = obj;
 }
 
 Dog& Dog::operator=(const Dog& obj)
@@ -29,6 +28,7 @@ Dog& Dog::operator=(const Dog& obj)
 Dog::~Dog()
 {
     std::cout << "Dog Destructor Called" << std::endl;
+    delete brain;
 }
 
 void Dog::makeSound() const
@@ -39,4 +39,9 @@ void Dog::makeSound() const
 std::string Dog::getType() const
 {
     return type;
+}
+
+Brain* Dog::getBrain( void )
+{
+    return brain;
 }
