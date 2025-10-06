@@ -12,7 +12,7 @@ class Cure : public AMateria
 		~Cure();
 
 		std::string const & getType() const;
-		Cure* clone() const;
+		AMateria* clone() const;
 		// void use(ICharacter& target);
 };
 
