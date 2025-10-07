@@ -10,10 +10,9 @@ class Cure : public AMateria
 		Cure(const Cure& obj);
 		Cure& operator=(const Cure& obj);
 		~Cure();
-
 		std::string const & getType() const;
 		AMateria* clone() const;
-		// void use(ICharacter& target);
+		void use(ICharacter& target);
 };
 
 #endif

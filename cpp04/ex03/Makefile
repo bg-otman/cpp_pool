@@ -1,9 +1,9 @@
-CC = c++
+CC = c++ -g
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp
+SRCS = main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp MateriaSource.cpp
 OBJS = $(SRCS:.cpp=.o)
-INCLUDES = AMateria.hpp Ice.hpp Cure.hpp Character.hpp
-NAME = Polymorphism
+INCLUDES = AMateria.hpp Ice.hpp Cure.hpp Character.hpp MateriaSource.hpp
+NAME = a.out
 
 all : $(NAME)
 

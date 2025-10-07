@@ -12,10 +12,7 @@ Cure::Cure(const Cure& obj)
 
 Cure& Cure::operator=(const Cure& obj)
 {
-	if (this != &obj)
-	{
-		type = "cure"; /// !!!
-	}
+	(void) obj;
 	return (*this);
 }
 
@@ -31,4 +28,9 @@ std::string const & Cure::getType() const
 AMateria* Cure::clone() const
 {
 	return (new Cure());
+}
+
+void Cure::use(ICharacter& target)
+{
+	std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
 }
