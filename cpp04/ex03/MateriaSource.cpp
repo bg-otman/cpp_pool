@@ -2,14 +2,12 @@
 
 MateriaSource::MateriaSource()
 {
-	for (size_t i = 0; i < 4; i++)
-		materias[i] = NULL;
+	memset(materias, 0, sizeof(materias));
 }
 
 MateriaSource::MateriaSource(const MateriaSource& obj)
 {
-	for (size_t i = 0; i < 4; i++)
-		materias[i] = NULL;
+	memset(materias, 0, sizeof(materias));
 	*this = obj;
 }
 

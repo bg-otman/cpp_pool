@@ -2,19 +2,18 @@
 
 Character::Character()
 {
-	for (size_t i = 0; i < 4; i++)
-		materias[i] = NULL;
+	memset(materias, 0, sizeof(materias));
 }
 
 Character::Character(const std::string& name)
 	: name(name)
 {
-	for (size_t i = 0; i < 4; i++)
-		materias[i] = NULL;
+	memset(materias, 0, sizeof(materias));
 }
 
 Character::Character(const Character& obj)
 {
+	memset(materias, 0, sizeof(materias));
 	*this = obj;
 }
 
