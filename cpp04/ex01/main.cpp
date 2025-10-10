@@ -7,7 +7,7 @@ int main()
     int arr_size = 4;
     const Animal* animals[arr_size];
     
-    std::cout << "\n---- Array of Animals ----" << std::endl;
+    std::cout << "---- Array of Animals ----" << std::endl;
     for (int i = 0; i < arr_size; i++)
     {
         if (i < arr_size / 2)
@@ -25,12 +25,14 @@ int main()
     std::cout << "====Deep Copy test====" << std::endl;
     Dog dog1;
     dog1.getBrain()->setIdea(0, "NMCHI NL3B");
-    Dog dog2 = dog1;
+    Dog dog2;
+    dog2 = dog1;
 
     std::cout << "Dog1 idea[0]: " << dog1.getBrain()->getIdea(0) << std::endl;
     std::cout << "Dog2 idea[0]: " << dog2.getBrain()->getIdea(0) << std::endl;
 
     dog2.getBrain()->setIdea(0, "NMCHI N3S");
+
     std::cout << "Dog1 idea[0] after dog2 change: " << dog1.getBrain()->getIdea(0) << std::endl;
     std::cout << "Dog2 idea[0] after dog2 change: " << dog2.getBrain()->getIdea(0) << std::endl;
     
