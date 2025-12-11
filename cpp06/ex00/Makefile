@@ -1,8 +1,8 @@
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp ScalarConverter.cpp
+SRCS = main.cpp ScalarConverter.cpp DetectType.cpp
 OBJS = $(SRCS:.cpp=.o)
-INCLUDES = ScalarConverter.hpp
+INCLUDES = ScalarConverter.hpp DetectType.hpp
 NAME = convert
 
 all : $(NAME)

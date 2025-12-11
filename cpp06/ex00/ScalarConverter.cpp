@@ -24,6 +24,39 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter& obj)
 void ScalarConverter::convert(const std::string& str)
 {
     Type type = DetectType::detect_type(str);
+    if (type == NONE)
+    {
+        std::cout << "char: impossible"  << std::endl;
+        std::cout << "int: impossible"  << std::endl;
+        std::cout << "float: impossible"  << std::endl;
+        std::cout << "double: impossible"  << std::endl;
+        return ;
+    }
+    char char_type;
+    int int_type;
+    float float_type;
+    double double_type;
+
+    switch (type)
+    {
+        case CHAR:
+            char_type = str[1];
+            break;
+        case INT:
+            int_type = atoi(str.c_str());
+            break;
+        case FLOAT:
+            // float_type = ;   ///strtod
+            break;
+        default:
+            break;
+    }
+}
+
+
+/*
+
+    // std::cout << "test : [" << type << "]\n";
     switch (type)
     {
         case NONE:
@@ -44,4 +77,5 @@ void ScalarConverter::convert(const std::string& str)
         default:
             break;
     }
-}
+
+*/

@@ -8,6 +8,6 @@ int main(int ac, char *av[])
         return 1;
     }
     const std::string str = av[1];
-    // ScalarConverter::convert(str);
+    ScalarConverter::convert(str);
     return 0;
 }
