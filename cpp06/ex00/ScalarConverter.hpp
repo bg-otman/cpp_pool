@@ -5,11 +5,10 @@
 #include <cstdlib>
 #include <limits>
 #include <climits>
+#include <iomanip>
+#include <cmath>
+#include <cfloat>
 
-#define FLOAT_MAX std::numeric_limits<float>::max()
-#define FLOAT_MIN std::numeric_limits<float>::min()
-#define DOUBLE_MAX std::numeric_limits<double>::max()
-#define DOUBLE_MIN std::numeric_limits<double>::min()
 
 
 enum Type
@@ -30,5 +29,7 @@ class ScalarConverter {
     public:
         static void convert(const std::string& str);
 };
+
+void printResults(double check, char c, int i, float f, double d);
 
 #endif

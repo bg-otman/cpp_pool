@@ -36,7 +36,7 @@ bool DetectType::isFloat(const std::string& str)
 {
     size_t i = 0;
     bool found_dot = false;
-    if (str == "+inff" || str == "-inff" || str == "nanf")
+    if (str == "inff" || str == "+inff" || str == "-inff" || str == "nanf")
         return true;
     while (i < str.length() && isspace(str[i]))
         i++;
@@ -58,7 +58,7 @@ bool DetectType::isDouble(const std::string& str)
 {
     size_t i = 0;
     bool found_dot = false;
-    if (str == "+inf" || str == "-inf" || str == "nan")
+    if (str == "inf" || str == "+inf" || str == "-inf" || str == "nan")
         return true;
     while (i < str.length() && isspace(str[i]))
         i++;

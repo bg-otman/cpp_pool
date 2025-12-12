@@ -1,5 +1,6 @@
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
+# CFLAGS = -std=c++98
 SRCS = main.cpp ScalarConverter.cpp DetectType.cpp
 OBJS = $(SRCS:.cpp=.o)
 INCLUDES = ScalarConverter.hpp DetectType.hpp

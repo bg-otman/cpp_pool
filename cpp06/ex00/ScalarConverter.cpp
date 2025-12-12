@@ -20,7 +20,6 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter& obj)
     return *this;
 }
 
-
 void ScalarConverter::convert(const std::string& str)
 {
     Type type = DetectType::detect_type(str);
@@ -32,26 +31,27 @@ void ScalarConverter::convert(const std::string& str)
         std::cout << "double: impossible"  << std::endl;
         return ;
     }
-    char char_type;
-    int int_type;
-    float float_type;
-    double double_type;
-    double check_val = std::atof(str.c_str());
+    char c = 0;
+    int i = 0;
+    float f = 0.0f;
+    double d = 0.0;
+    double check_val = std::strtod(str.c_str(), NULL);
     
     // convert to actual type
     switch (type)
     {
         case CHAR:
-            char_type = str[1];
+            c = str[1];
             break;
         case INT:
-            int_type = atoi(str.c_str());
+            if (check_val >= INT_MIN && check_val <= INT_MAX)
+                i = static_cast<int>(check_val);
             break;
         case FLOAT:
-            float_type = std::atof(str.c_str());
+            f = std::strtof(str.c_str(), NULL);
             break;
         case DOUBLE:
-            double_type = std::atof(str.c_str());
+            d = std::strtod(str.c_str(), NULL);
             break;
         default:
             break;
@@ -60,87 +60,70 @@ void ScalarConverter::convert(const std::string& str)
     switch (type)
     {
         case CHAR:
-            int_type = static_cast<int>(char_type);
-            float_type = static_cast<float>(char_type);
-            double_type = static_cast<double>(char_type);
+            i = static_cast<int>(c);
+            f = static_cast<float>(c);
+            d = static_cast<double>(c);
             break;
         case INT:
-            char_type = static_cast<char>(int_type);
-            float_type = static_cast<float>(int_type);
-            double_type = static_cast<double>(int_type);
+            c = static_cast<char>(i);
+            f = static_cast<float>(i);
+            d = static_cast<double>(i);
             break;
         case FLOAT:
-            char_type = static_cast<char>(float_type);
-            int_type = static_cast<int>(float_type);
-            double_type = static_cast<double>(float_type);
+            c = static_cast<char>(f);
+            i = static_cast<int>(f);
+            d = static_cast<double>(f);
             break;
         case DOUBLE:
-            char_type = static_cast<char>(double_type);
-            int_type = static_cast<int>(double_type);
-            float_type = static_cast<float>(double_type);
+            c = static_cast<char>(d);
+            i = static_cast<int>(d);
+            f = static_cast<float>(d);
             break;
         default:
             break;
     }
-
+    std::cout << std::fixed << std::setprecision(1);
+    printResults(check_val, c, i, f, d);
 }
 
-void fromChar(char c, int i, float f, double d)
+void printResults(double check, char c, int i, float f, double d)
 {
-    // char
-    isprint(c) ? std::cout << c : std::cout << "Non displayable";
-    std::cout << std::endl;
-    // int
-    std::cout << i << std::endl;
-    // float
-    std::cout << f << std::endl;
-    // double
-    std::cout << d << std::endl;
-}
+    bool is_nan = std::isnan(check);
+    bool is_inf = std::isinf(check);
 
-void fromInt(double check, std::string s, char c, int i, float f, double d)
-{
     // char
     std::cout << "char: ";
-    if (check < 0 || check > 127)
+    if (check < 0 || check > 127 || is_nan || is_inf)
         std::cout << "impossible" << std::endl;
     else if (!isprint(i))
         std::cout << "Non displayable" << std::endl;
     else
-        std::cout << c << std::endl;
+        std::cout << "'" << c << "'" << std::endl;
     
     // int
     std::cout << "int: ";
     if (check < INT_MIN || check > INT_MAX
-        || s == "nan" || s == "nanf"
-        || s == "+inf" || s == "-inf")
+        || is_nan || is_inf)
         std::cout << "impossible" << std::endl;
     else
         std::cout << i << std::endl;
     
     // float
     std::cout << "float: ";
-    if (check < FLOAT_MIN || check > FLOAT_MAX)
+    if (is_nan || is_inf)
+        std::cout << check << "f" << std::endl;
+    else if (check < -FLT_MAX || check > FLT_MAX)
         std::cout << "impossible" << std::endl;
-    else if (s == "nan" || s == "nanf")
-        std::cout << "nanf" << std::endl;
-    else if (s == "+inf" || s == "+inff")
-        std::cout << "+inff" << std::endl;
-    else if (s == "-inf" || s == "-inff")
-        std::cout << "-inff" << std::endl;
     else
-        std::cout << f << std::endl;
+        std::cout << f << "f" << std::endl;
     
     // double
     std::cout << "double: ";
-    if (check < DOUBLE || check > DOUBLE_MAX)
+    if (is_nan || is_inf)
+        std::cout << check << std::endl;
+    else if (check < -DBL_MAX || check > DBL_MAX)
         std::cout << "impossible" << std::endl;
-    else if (s == "nan" || s == "nanf")
-        std::cout << "nan" << std::endl;
-    else if (s == "+inf" || s == "+inff")
-        std::cout << "+inf" << std::endl;
-    else if (s == "-inf" || s == "-inff")
-        std::cout << "-inf" << std::endl;
     else
         std::cout << d << std::endl;
 }
+
