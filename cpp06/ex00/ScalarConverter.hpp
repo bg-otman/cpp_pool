@@ -3,13 +3,9 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <limits>
 #include <climits>
 #include <iomanip>
-#include <cmath>
 #include <cfloat>
-
-
 
 enum Type
 {
@@ -30,6 +26,6 @@ class ScalarConverter {
         static void convert(const std::string& str);
 };
 
-void printResults(double check, char c, int i, float f, double d);
+bool is_pseudo_literals(const std::string& s);
 
 #endif
