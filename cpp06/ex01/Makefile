@@ -1,9 +1,9 @@
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp ScalarConverter.cpp DetectType.cpp
+SRCS = main.cpp Serializer.cpp
 OBJS = $(SRCS:.cpp=.o)
-INCLUDES = ScalarConverter.hpp DetectType.hpp
-NAME = convert
+INCLUDES = Serializer.hpp Data.hpp
+NAME = Serializer
 
 all : $(NAME)
 
