@@ -32,10 +32,8 @@ void ScalarConverter::convert(const std::string& str)
     Type type = DetectType::detect_type(str);
     if (type == NONE)
     {
-        std::cout << "char: impossible"  << std::endl;
-        std::cout << "int: impossible"  << std::endl;
-        std::cout << "float: impossible"  << std::endl;
-        std::cout << "double: impossible"  << std::endl;
+        std::cerr << "Invalid Type, ONLY : CHAR, INT, FLOAT and DOUBLE ALLOWED"  << std::endl;
+        std::cerr << "NOTE FOR CHAR IT MUST BE WITH THIS FORMAT : ex: ./convert \"\'a'\""  << std::endl;
         return ;
     }
 

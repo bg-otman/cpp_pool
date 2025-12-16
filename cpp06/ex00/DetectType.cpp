@@ -26,6 +26,8 @@ bool DetectType::isInteger(const std::string& str)
         i++;
     if (str[i] == '-' || str[i] == '+')
         i++;
+    if (!str[i])
+        return false;
     for (; i < str.length(); i++)
         if (!isdigit(str[i]))
             return false;
@@ -42,6 +44,8 @@ bool DetectType::isFloat(const std::string& str)
         i++;
     if (str[i] == '-' || str[i] == '+')
         i++;
+    if (!str[i])
+        return false;
     for (; i < str.length(); i++)
     {
         if ((!isdigit(str[i]) && str[i] != 'f' && str[i] != '.')
@@ -64,6 +68,8 @@ bool DetectType::isDouble(const std::string& str)
         i++;
     if (str[i] == '-' || str[i] == '+')
         i++;
+    if (!str[i])
+        return false;
     for (; i < str.length(); i++)
     {
         if ((!isdigit(str[i]) && str[i] != '.')
