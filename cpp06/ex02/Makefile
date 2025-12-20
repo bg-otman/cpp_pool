@@ -2,7 +2,7 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS = main.cpp Base.cpp
 OBJS = $(SRCS:.cpp=.o)
-INCLUDES = Base.hpp
+INCLUDES = Base.hpp A.hpp B.hpp C.hpp
 NAME = identify_type
 
 all : $(NAME)

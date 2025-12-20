@@ -1,18 +1,23 @@
 #ifndef BASE_HPP
 #define BASE_HPP
 
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <exception>
+
 class Base
 {
-    private:
-        /* data */
     public:
-        Base();
-        Base(const Base& obj);
-        Base& operator=(const Base& obj);
-        ~Base();
-
-        
+        virtual ~Base();
 };
 
+#include "A.hpp"
+#include "B.hpp"
+#include "C.hpp"
+
+Base*   generate(void);
+void    identify(Base* p);
+void    identify(Base& p);
 
 #endif
