@@ -2,20 +2,27 @@
 
 template <typename T>
 Array<T>::Array()
+    : len(0)
 {
     this->arr = new T[0];
 }
 
 template <typename T>
 Array<T>::Array(unsigned int n)
+    : len(n)
 {
     this->arr = new T[n]();
 }
 
 template <typename T>
 Array<T>::Array(const Array& obj)
+    : len(obj.len)
 {
-    *this = obj;
+    this->arr = new T[this->len]();
+    for (size_t i = 0; i < this->len; i++)
+    {
+        arr[i] = obj.arr[i];
+    }
 }
 
 template <typename T>
@@ -23,12 +30,10 @@ Array<T>& Array<T>::operator=(const Array<T>& obj)
 {
     if (this != &obj)
     {
-        size_t len = obj.size();
-
         delete[] this->arr;
-        this->arr = new T[len]();
-        
-        for (size_t i = 0; i < len; i++)
+        this->len = obj.len;
+        this->arr = new T[this->len]();
+        for (size_t i = 0; i < this->len; i++)
         {
             arr[i] = obj.arr[i];
         }
@@ -37,10 +42,10 @@ Array<T>& Array<T>::operator=(const Array<T>& obj)
 }
 
 template <typename T>
-T& Array<T>::operator[](int index)
+T& Array<T>::operator[](unsigned int index)
 {
-    if (index >= this->size() || index < 0)
-        throw std::runtime_error("Index out of bound");
+    if (index >= this->len)
+        throw std::runtime_error("Index out of bounds");
     else
         return arr[index];
 }
@@ -52,10 +57,7 @@ Array<T>::~Array()
 }
 
 template <typename T>
-int Array<T>::size() const
+unsigned int Array<T>::size() const
 {
-    int size = 0;
-    while (arr[size])
-        size++;
-    return size;    
+    return this->len;
 }

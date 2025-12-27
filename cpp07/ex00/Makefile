@@ -2,8 +2,8 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
-INCLUDES = Array.hpp Array.tpp
-NAME = Array
+INCLUDES = whatever.hpp
+NAME = whatever
 RED = \033[0;31m
 
 all : $(NAME)

@@ -9,14 +9,15 @@ class Array
 {
     private:
         T* arr;
+        unsigned int len;
     public:
         Array();
         Array(unsigned int n);
         Array(const Array& obj);
         Array& operator=(const Array& obj);
-        T& operator[](int index);
+        T& operator[](unsigned int index);
         ~Array();
-        int size() const;
+        unsigned int size() const;
 };
 
 #include "Array.tpp"
