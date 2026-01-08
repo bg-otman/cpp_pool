@@ -3,20 +3,27 @@
 int main( void )
 {
     std::vector<int> nums;
-    for (int i = 10; i < 15; i++)
+    for (int i = 0; i < 5; i++)
         nums.push_back(i);
 
-    std::cout << *(nums.begin()) << std::endl;
-    std::cout << *(nums.end()) << std::endl;
-    
+    std::cout << "Numbers in the container are : ";
+    std::vector<int>::iterator n = nums.begin();
+    for (; n != nums.end(); n++)
+        std::cout << *n << " ";
+    std::cout << std::endl;
 
-    int needle = 4;
-    // if (easyfind(nums, needle) == nums.end())
-    //     std::cout << "The container doesn't contain : " << needle << std::endl;
-    // else
-    //     std::cout << "Easy Find : " << needle << std::endl;
-
-    std::cout << "[" << *easyfind(nums, needle) << "]\n";
-
+    int needle = 2;
+    try
+    {
+        easyfind(nums, needle);
+        needle -= 2;
+        easyfind(nums, needle);
+        needle += 8;
+        easyfind(nums, needle);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
     return 0;
 }
