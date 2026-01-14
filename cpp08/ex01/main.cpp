@@ -44,7 +44,7 @@ int main()
         
         Span rangeSpan(5);
 
-        rangeSpan.addRange(numbers.begin(), numbers.end()); 
+        rangeSpan.addRange<std::vector<int> >(numbers.begin(), numbers.end());
         
         std::cout << "Vector Shortest: " << rangeSpan.shortestSpan() << " (Expected: 49)" << std::endl;
         std::cout << "Vector Longest:  " << rangeSpan.longestSpan() << " (Expected: 99)" << std::endl;

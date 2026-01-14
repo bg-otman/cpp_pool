@@ -36,23 +36,6 @@ void Span::addNumber(int n)
     N--;
 }
 
-void Span::addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end)
-{
-    std::vector<int>::iterator i = begin;
-    int range_size = 0;
-    for (; i != end; i++)
-        range_size++;
-    i = begin;
-    while (N > 0 && range_size--)
-    {
-        i++;
-        N--;
-    }
-    span.insert(span.end(), begin, end);
-    if (range_size > 0 && N <= 0)
-        throw std::runtime_error("Maximum Number Reached");
-}
-
 int     Span::shortestSpan()
 {
     int size = span.size();
