@@ -13,22 +13,16 @@
 #include <cerrno>
 #include <cstdlib>
 
-enum BadNum
-{
-        NONE,
-        BIG_NUM,
-        NOT_NUM,
-        NEGATIVE_NUM
-};
-
 class BitcoinExchange
 {
     private:
         std::map<std::string, float> _data;
-        std::ifstream _input;
+        std::string _input;
         
         bool    is_valid_date(std::string date) const;
-        bool    is_valid_rate(std::string rate, BadNum& reason) const;
+        bool    is_valid_rate(std::string rate) const;
+        void    print_price(std::string date, float rate);
+        void    read_database( void );
     public:
         BitcoinExchange();
         BitcoinExchange(const BitcoinExchange& obj);
@@ -36,10 +30,7 @@ class BitcoinExchange
         ~BitcoinExchange();
 
         BitcoinExchange(const char* input);
-        void    read_database( void );
         void    get_btc_price( void );
-        void    print_price(std::string date, float rate);
-        
 };
 
 

@@ -7,10 +7,9 @@ int main(int ac, char *av[])
         std::cerr << "Error: could not open file." << std::endl;
         return 1;
     }
+    BitcoinExchange btc(av[1]);
     try
     {
-        BitcoinExchange btc(av[1]);
-        btc.read_database();
         btc.get_btc_price();
     }
     catch(const std::exception& e)

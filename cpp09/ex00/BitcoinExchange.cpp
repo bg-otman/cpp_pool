@@ -5,29 +5,27 @@ BitcoinExchange::BitcoinExchange()
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& obj)
+	: _data(obj._data), _input(obj._input)
 {
-    *this = obj;
 }
 
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& obj)
 {
     if (this != &obj)
     {
-        
+        this->_data = obj._data;
+		this->_input = obj._input;
     }
     return (*this);
 }
 
 BitcoinExchange::~BitcoinExchange()
 {
-    _input.close();
 }
 
 BitcoinExchange::BitcoinExchange(const char* input)
-    : _input(input)
+	: _input(input)
 {
-    if (!_input.is_open())
-        throw std::runtime_error("Error: could not open **input** file.");
 }
 
 bool    BitcoinExchange::is_valid_date(std::string date) const
@@ -48,9 +46,9 @@ bool    BitcoinExchange::is_valid_date(std::string date) const
             month = static_cast<int>(strtof(token.c_str(), &end));
         else
             day = static_cast<int>(strtof(token.c_str(), &end));
+		if (*end != '\0' || (i == 0 && token.size() != 4) || (i >= 1 && token.size() != 2))
+			return false;
         i++;
-        if (*end != '\0')
-            return false;
     }
     tm.tm_year = year - 1900;
     tm.tm_mon = month - 1;
@@ -66,50 +64,19 @@ bool    BitcoinExchange::is_valid_date(std::string date) const
     return true;
 }
 
-bool   BitcoinExchange::is_valid_rate(std::string rate, BadNum& reason) const
+bool   BitcoinExchange::is_valid_rate(std::string rate) const
 {
     errno = 0;
     char* endptr;
-    reason = NONE;
 
     float num = strtof(rate.c_str(), &endptr);
-    if (errno == ERANGE)
-        reason = BIG_NUM;
+    if (errno == ERANGE || num > 1000)
+		std::cout << "Error: too large a number." << std::endl;
     else if (*endptr != '\0')
-        reason = NOT_NUM;
+        std::cout << "Error: bad input => Not number" << std::endl;
     else if (num < 0)
-        reason = NEGATIVE_NUM;
-
-    if (reason == NONE && num > 1000)
-    {
-        reason = BIG_NUM;
-        return true;
-    }
-    else
-        return reason == NONE ? true : false;
-}
-
-void    BitcoinExchange::read_database( void )
-{
-    std::ifstream db("data.csv");
-    std::string line, date, rate;
-    BadNum reason;
-
-    if (!db.is_open())
-        throw std::runtime_error("Error: could not open **data** file.");
-    if (!std::getline(db, line) || line != "date,exchange_rate")
-        throw std::runtime_error("Error: Invalid header");
-    while (std::getline(db, line))
-    {
-        boost::trim(line);
-        date = line.substr(0, line.find_first_of(","));
-        rate = line.substr(line.find_first_of(",") + 1);
-        if (line.empty() || std::count(line.begin(), line.end(), ',') != 1
-            || !is_valid_date(date)
-            || !is_valid_rate(rate, reason))
-            continue;
-        _data[date] = strtof(rate.c_str(), NULL);
-    }
+		std::cout << "Error: not a positive number." << std::endl;
+	return ((errno == ERANGE || num > 1000 || *endptr != '\0' || num < 0) ? false : true);
 }
 
 void    BitcoinExchange::print_price(std::string date, float rate)
@@ -128,34 +95,46 @@ void    BitcoinExchange::print_price(std::string date, float rate)
     std::cout << date << " => " << rate << " = " << rate * (it_price->second) << std::endl;
 }
 
+void    BitcoinExchange::read_database( void )
+{
+    std::ifstream db("data.csv");
+    std::string line, date, rate;
+
+    if (!db.is_open())
+        throw std::runtime_error("Error: could not open **data** file.");
+    if (!std::getline(db, line) || line != "date,exchange_rate")
+        throw std::runtime_error("Error: Invalid header");
+    while (std::getline(db, line))
+    {
+        date = line.substr(0, line.find_first_of(","));
+        rate = line.substr(line.find_first_of(",") + 1);
+        _data[date] = strtof(rate.c_str(), NULL);
+    }
+	db.close();
+}
+
 void    BitcoinExchange::get_btc_price( void )
 {
     std::string line, date, rate;
-    BadNum reason;
+	std::ifstream in_file(_input.c_str());
 
-    if (!std::getline(_input, line) || line != "date | value")
-        throw std::runtime_error("Error: Invalid header");
-    while (std::getline(_input, line))
+	read_database();
+	if (!in_file.is_open())
+    	throw std::runtime_error("Error: could not open **input** file.");
+    if (!std::getline(in_file, line) || line != "date | value")
+        throw std::runtime_error("Error: Invalid header in input file");
+    while (std::getline(in_file, line))
     {
         boost::trim(line);
         date = line.substr(0, line.find_first_of("|"));
         rate = line.substr(line.find_first_of("|") + 1);
         if (line.empty())
             continue;
-        else if (!is_valid_date(date))
-            std::cout << "Error: bad input => " << date << std::endl;
-        else if (std::count(line.begin(), line.end(), '|') != 1)
-            std::cout << "Error: bad input => invalid format (ex: date | value)." << std::endl;
-        else if (!is_valid_rate(rate, reason) || reason == BIG_NUM)
-        {
-            if (reason == NEGATIVE_NUM)
-                std::cout << "Error: not a positive number." << std::endl;
-            else if (reason == BIG_NUM)
-                std::cout << "Error: too large a number." << std::endl;
-            else
-                std::cout << "Error: bad input => Not number" << std::endl;
-        }
-        else
+		else if (rate.empty() || !is_valid_date(date)
+				|| std::count(line.begin(), line.end(), '|') != 1)
+			std::cout << "Error: bad input => " << line << std::endl;
+        else if (is_valid_rate(rate))
             print_price(date, strtof(rate.c_str(), NULL));
     }
+	in_file.close();
 }
