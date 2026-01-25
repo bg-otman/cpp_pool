@@ -57,14 +57,6 @@ int RPN::calculate(int first, int second, char op) const
     return result;
 }
 
-void display_stack(std::stack<int> st) {
-    while (!st.empty()) {
-        std::cout << st.top() << ", ";
-        st.pop();
-    }
-    std::cout << std::endl;
-}
-
 void    RPN::process_expression( void )
 {
     int first, second, result;
