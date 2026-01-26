@@ -20,6 +20,8 @@ class PmergeMe
         std::string _nums;
 
         void    print_elements( void ) const;
+        void    create_chains(std::vector<int>& main, std::vector<int>& pending) const;
+        void    merge_sort(std::vector<int>& arr) const;
     public:
         PmergeMe();
         PmergeMe(const PmergeMe& obj);
@@ -27,7 +29,7 @@ class PmergeMe
         ~PmergeMe();
 
         PmergeMe(const char *nums);
-        void    sort( void );
+        void    fordJohnsonSort( void );
 };
 
 #endif

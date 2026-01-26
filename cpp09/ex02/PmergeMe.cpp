@@ -57,10 +57,35 @@ PmergeMe::PmergeMe(const char *nums)
     }
 }
 
-void	PmergeMe::sort( void )
+void    PmergeMe::merge_sort(std::vector<int>& arr) const
 {
-	// std::cout << "Before: ";
-	// print_elements();
 
+}
+
+void    PmergeMe::create_chains(std::vector<int>& main, std::vector<int>& pending) const
+{
+    int pair1, pair2;
+    for (size_t i = 0; i < _vector.size(); i += 2)
+    {
+        pair1 = _vector[i];
+        pair2 = _vector[i + 1];
+        pending.push_back(std::min(pair1, pair2));
+        main.push_back(std::max(pair1, pair2));
+    }
+}
+
+void	PmergeMe::fordJohnsonSort( void )
+{
+    std::vector<int> main_chain, pending;
+    bool isOdd;
+    int leftOver;
+    
+    isOdd = _vector.size() % 2 ? true : false;
+    if (isOdd)
+    {
+        leftOver = _vector[_vector.size() - 1];
+        _vector.pop_back();
+    }
+    create_chains(main_chain, pending);
 
 }
