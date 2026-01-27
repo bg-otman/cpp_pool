@@ -57,22 +57,90 @@ PmergeMe::PmergeMe(const char *nums)
     }
 }
 
-void    PmergeMe::merge_sort(std::vector<int>& arr) const
+void    PmergeMe::merge(std::vector<int>& arr, size_t left, size_t mid, size_t right) const
 {
+    size_t left_size = mid - left + 1;
+    size_t right_size = right - mid;
+    size_t i = 0;
+    size_t j = 0;
+    size_t k = left;
+    std::vector<int> tmp_left(left_size), tmp_right(right_size);
 
+    for (; i < left_size; i++)
+        tmp_left[i] = arr[left + i];
+    for (; j < right_size; j++)
+        tmp_right[j] = arr[mid + j + 1];
+
+    i = 0, j = 0;
+    while (i < left_size && j < right_size)
+    {
+        if (tmp_left[i] <= tmp_right[j])
+            arr[k++] = tmp_left[i++];
+        else
+            arr[k++] = tmp_right[j++];
+    }
+
+    while (i < left_size)
+        arr[k++] = tmp_left[i++];
+    while (j < right_size)
+        arr[k++] = tmp_right[j++];
+}
+
+void    PmergeMe::merge_sort(std::vector<int>& arr, size_t left, size_t right) const
+{
+    if (left >= right)
+        return ;
+    size_t mid = left + (right - left) / 2;
+    merge_sort(arr, left, mid);
+    merge_sort(arr, mid + 1, right);
+    merge(arr, left, mid, right);
+}
+
+void	print_vec( std::vector<int>& v) // tmp fun, i need to remove it
+{
+    for (std::vector<int>::const_iterator i = v.begin(); i != v.end(); i++)
+    {
+        std::cout << *i << " ";
+    }
+    std::cout << std::endl;
 }
 
 void    PmergeMe::create_chains(std::vector<int>& main, std::vector<int>& pending) const
 {
-    int pair1, pair2;
+    int p1, p2;
+    std::vector<std::pair<int, int> > pairs;
     for (size_t i = 0; i < _vector.size(); i += 2)
     {
-        pair1 = _vector[i];
-        pair2 = _vector[i + 1];
-        pending.push_back(std::min(pair1, pair2));
-        main.push_back(std::max(pair1, pair2));
+        p1 = _vector[i];
+        p2 = _vector[i + 1];
+
+        if (p1 <= p2)
+            pairs.push_back(std::make_pair(p1, p2));
+        else
+            pairs.push_back(std::make_pair(p2, p1));
+
+        // pending.push_back(std::min(p1, p2));
+        // main.push_back(std::max(p1, p2));
     }
+    // merge_sort(main, 0, main.size() - 1);
+    
+    for (size_t i = 0; i < pairs.size(); i++)
+    {
+        main.insert(main.begin(), pairs[i].second);
+        pending.insert(pending.begin(), pairs[i].first);
+    }
+    
+
+    std::cout << "main chain : ";
+    print_vec(main);
+    std::cout << "pending chain : ";
+    print_vec(pending);
 }
+
+/*
+main chain : 4 6 8 
+pending chain : 2 5 3 
+*/
 
 void	PmergeMe::fordJohnsonSort( void )
 {

@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <cstdlib>
+#include <utility>
 #include <vector>
 #include <deque>
 #include <boost/algorithm/string.hpp>
@@ -21,7 +22,8 @@ class PmergeMe
 
         void    print_elements( void ) const;
         void    create_chains(std::vector<int>& main, std::vector<int>& pending) const;
-        void    merge_sort(std::vector<int>& arr) const;
+        void    merge(std::vector<int>& arr, size_t l, size_t m, size_t r) const;
+        void    merge_sort(std::vector<int>& arr, size_t l, size_t r) const;
     public:
         PmergeMe();
         PmergeMe(const PmergeMe& obj);
