@@ -20,10 +20,12 @@ class PmergeMe
         std::deque<int> _deque;
         std::string _nums;
 
-        void    print_elements( void ) const;
-        void    create_chains(std::vector<int>& main, std::vector<int>& pending) const;
-        void    merge(std::vector<int>& arr, size_t l, size_t m, size_t r) const;
-        void    merge_sort(std::vector<int>& arr, size_t l, size_t r) const;
+        std::vector<int>    fordJohnsonSort( std::vector<int> arr );
+        void                separate_pairs(std::vector<int>& main, std::vector<int>& pending, std::vector<int> arr) const;
+        void                binary_insertion(std::vector<int>& main_chain, std::vector<int>& pending) const;
+        void                get_insertion_order(std::vector<int>& insertion_order, int size) const;
+        int                 jackobsthal_nums(int n) const;
+        int                 get_jackobsthal_num(int num) const;
     public:
         PmergeMe();
         PmergeMe(const PmergeMe& obj);
@@ -31,7 +33,8 @@ class PmergeMe
         ~PmergeMe();
 
         PmergeMe(const char *nums);
-        void    fordJohnsonSort( void );
+        void    print_elements( void ) const;
+        void    sort( void );
 };
 
 #endif

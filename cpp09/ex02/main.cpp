@@ -10,7 +10,7 @@ int main(int ac, char* av[])
     try
     {
         PmergeMe pmerge(av[1]);
-        pmerge.fordJohnsonSort();
+        pmerge.sort();
     }
     catch(const std::exception& e)
     {
