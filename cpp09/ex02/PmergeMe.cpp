@@ -24,15 +24,6 @@ PmergeMe::~PmergeMe()
 {
 }
 
-void	PmergeMe::print_elements( void ) const
-{
-    for (std::vector<int>::const_iterator i = _vector.begin(); i != _vector.end(); i++)
-    {
-        std::cout << *i << " ";
-    }
-    std::cout << std::endl;
-}
-
 PmergeMe::PmergeMe(const char *nums)
     : _nums(nums)
 {
@@ -82,72 +73,7 @@ int PmergeMe::get_jackobsthal_num(int num) const
     return result;
 }
 
-void	print_vec( std::vector<int>& v) // tmp fun, i need to remove it
-{
-    for (std::vector<int>::const_iterator i = v.begin(); i != v.end(); i++)
-    {
-        std::cout << *i << " ";
-    }
-    std::cout << std::endl;
-}
-
-void    fill_gap(std::vector<int>& insertion_order, int start, int end)
-{
-    while (end > start)
-    {
-        insertion_order.push_back(end);
-        end--;
-    }
-}
-
-void    PmergeMe::get_insertion_order(std::vector<int>& insertion_order, int size) const
-{
-    int i = 1, previous = 0, order;
-    while (i < size)
-    {
-        order = get_jackobsthal_num(i);
-        if (order > size)
-            break;
-        if (order > previous)
-        {
-            fill_gap(insertion_order, previous, order);
-            previous = order;
-        }
-        i++;
-    }
-    fill_gap(insertion_order, previous, size);
-}
-
-void    PmergeMe::binary_insertion(std::vector<int>& main_chain, std::vector<int>& pending) const
-{
-    std::vector<int> insert_order;
-    size_t size = pending.size();
-    std::vector<int>::iterator pos;
-    int to_insert;
-
-    main_chain.insert(main_chain.begin(), pending[0]);
-    get_insertion_order(insert_order, size);
-    for (size_t i = 1; i < size; i++)
-    {
-        to_insert = pending[insert_order[i] - 1];
-        pos = std::upper_bound(main_chain.begin(), main_chain.end(), to_insert);
-        main_chain.insert(pos, to_insert);
-    }
-}
-
-void    PmergeMe::separate_pairs(std::vector<int>& big, std::vector<int>& small, std::vector<int> arr) const
-{
-    int p1, p2;
-    for (size_t i = 0; i < arr.size(); i += 2)
-    {
-        p1 = arr[i];
-        p2 = arr[i + 1];
-        small.push_back(std::min(p1, p2));
-        big.push_back(std::max(p1, p2));
-    }
-}
-
-std::vector<int>	PmergeMe::fordJohnsonSort( std::vector<int> arr )
+std::vector<int>	PmergeMe::sort_vector( std::vector<int> arr )
 {
     if (arr.size() <= 1)
         return arr;
@@ -160,8 +86,18 @@ std::vector<int>	PmergeMe::fordJohnsonSort( std::vector<int> arr )
         arr.pop_back();
     }
     std::vector<int> big_nums, small_nums;
-    separate_pairs(big_nums, small_nums, arr);
-    std::vector<int> main_chain = fordJohnsonSort(big_nums); // sort big nums recursively
+    
+    // separate_pairs
+    int p1, p2;
+    for (size_t i = 0; i < arr.size(); i += 2)
+    {
+        p1 = arr[i];
+        p2 = arr[i + 1];
+        small_nums.push_back(std::min(p1, p2));
+        big_nums.push_back(std::max(p1, p2));
+    }
+
+    std::vector<int> main_chain = sort_vector(big_nums); // sort big nums recursively
     std::vector<int> pending;
 
     // this loop push the small_nums to pending according to the order of big_nums in main_chain
@@ -180,12 +116,91 @@ std::vector<int>	PmergeMe::fordJohnsonSort( std::vector<int> arr )
     }
     if (isOdd)
         pending.push_back(leftOver);
-    binary_insertion(main_chain, pending);
+    // binary_insertion
+    std::vector<int> insert_order;
+    size_t size = pending.size();
+    std::vector<int>::iterator pos;
+    int to_insert;
+
+    main_chain.insert(main_chain.begin(), pending[0]);
+    get_insertion_order(insert_order, size);
+    for (size_t i = 1; i < size; i++)
+    {
+        to_insert = pending[insert_order[i] - 1];
+        pos = std::upper_bound(main_chain.begin(), main_chain.end(), to_insert);
+        main_chain.insert(pos, to_insert);
+    }
+
     return main_chain;
 }
 
-void    PmergeMe::sort( void )
+std::deque<int>	PmergeMe::sort_deque( std::deque<int> arr )
 {
-    _vector = fordJohnsonSort(_vector);
-    print_elements();
+    if (arr.size() <= 1)
+        return arr;
+    bool isOdd;
+    int leftOver;
+    isOdd = arr.size() % 2 ? true : false;
+    if (isOdd)
+    {
+        leftOver = arr[arr.size() - 1];
+        arr.pop_back();
+    }
+    std::deque<int> big_nums, small_nums;
+    
+    // separate_pairs
+    int p1, p2;
+    for (size_t i = 0; i < arr.size(); i += 2)
+    {
+        p1 = arr[i];
+        p2 = arr[i + 1];
+        small_nums.push_back(std::min(p1, p2));
+        big_nums.push_back(std::max(p1, p2));
+    }
+
+    std::deque<int> main_chain = sort_deque(big_nums); // sort big nums recursively
+    std::deque<int> pending;
+
+    // this loop push the small_nums to pending according to the order of big_nums in main_chain
+    for (size_t i = 0; i < main_chain.size(); i++)
+    {
+        int element = main_chain[i];
+        for (size_t j = 0; j < big_nums.size(); j++)
+        {
+            if (big_nums[j] == element)
+            {
+                pending.push_back(small_nums[j]);
+                big_nums[j] = -1;
+                break;
+            }
+        }
+    }
+    if (isOdd)
+        pending.push_back(leftOver);
+    // binary_insertion
+    std::deque<int> insert_order;
+    size_t size = pending.size();
+    std::deque<int>::iterator pos;
+    int to_insert;
+
+    main_chain.push_front(pending[0]);
+    get_insertion_order(insert_order, size);
+    for (size_t i = 1; i < size; i++)
+    {
+        to_insert = pending[insert_order[i] - 1];
+        pos = std::upper_bound(main_chain.begin(), main_chain.end(), to_insert);
+        main_chain.insert(pos, to_insert);
+    }
+
+    return main_chain;
+}
+
+void    PmergeMe::fordJohnsonSort( void )
+{
+    _vector = sort_vector(_vector);
+    _deque = sort_deque(_deque);
+    std::cout << "vector:" << std::endl;
+    print_elements(_vector);
+    std::cout << "deque:" << std::endl;
+    print_elements(_deque);
 }
