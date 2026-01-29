@@ -11,6 +11,7 @@
 #include <exception>
 #include <cerrno>
 #include <climits>
+#include <sys/time.h>
 
 class PmergeMe
 {
@@ -33,7 +34,6 @@ class PmergeMe
         ~PmergeMe();
 
         PmergeMe(char *nums[]);
-        template <typename T> void    print_elements( T& container ) const;
         void    fordJohnsonSort( void );
 };
 
@@ -65,16 +65,5 @@ void    PmergeMe::get_insertion_order(T& insertion_order, int size) const
     }
     fill_gap(insertion_order, previous, size);
 }
-
-template <typename T>
-void	PmergeMe::print_elements( T& container ) const
-{
-    for (typename T::const_iterator i = container.begin(); i != container.end(); i++)
-    {
-        std::cout << *i << " ";
-    }
-    std::cout << std::endl;
-}
-
 
 #endif

@@ -207,10 +207,40 @@ std::deque<int>	PmergeMe::sort_deque( std::deque<int> arr )
 
 void    PmergeMe::fordJohnsonSort( void )
 {
+    std::cout << "Before: ";
+    for (size_t i = 0; i < _vector.size() && i < 10; i++)
+		std::cout << _vector[i] << " ";
+    if (_vector.size() > 10)
+        std::cout << "[...]";
+    std::cout << std::endl;
+
+    struct timeval start, end;
+    
+    gettimeofday(&start, NULL);
     _vector = sort_vector(_vector);
+    gettimeofday(&end, NULL);
+    long vec_sec = end.tv_sec - start.tv_sec;
+    long vec_micro = end.tv_usec - start.tv_usec;
+    double vec_time = vec_sec * 1000000.0 + vec_micro;
+    
+    gettimeofday(&start, NULL);
     _deque = sort_deque(_deque);
-    std::cout << "vector:" << std::endl;
-    print_elements(_vector);
-    std::cout << "deque:" << std::endl;
-    print_elements(_deque);
+    gettimeofday(&end, NULL);
+    long deq_sec = end.tv_sec - start.tv_sec;
+    long deq_micro = end.tv_usec - start.tv_usec;
+    double deq_time = deq_sec * 1000000.0 + deq_micro;
+    
+    std::cout << "After:  ";
+    for (size_t i = 0; i < _vector.size() && i < 10; i++)
+		std::cout << _vector[i] << " ";
+    if (_vector.size() > 10)
+        std::cout << "[...]";
+    std::cout << std::endl;
+
+	std::cout << "Time to process a range of " << _vector.size()
+		<< " elements with std::[vector] : " 
+		<< vec_time << " us" << std::endl;
+	std::cout << "Time to process a range of " << _deque.size()
+		<< " elements with std::[deque] : "
+		<< deq_time << " us" << std::endl;
 }
