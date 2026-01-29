@@ -8,9 +8,8 @@
 #include <utility>
 #include <vector>
 #include <deque>
-#include <boost/algorithm/string.hpp>
 #include <exception>
-#include <sstream>
+#include <cerrno>
 #include <climits>
 
 class PmergeMe
@@ -18,12 +17,10 @@ class PmergeMe
     private:
         std::vector<int> _vector;
         std::deque<int> _deque;
-        std::string _nums;
 
         std::vector<int>    sort_vector( std::vector<int> arr );
         std::deque<int>     sort_deque( std::deque<int> arr );
-        void                separate_pairs(std::vector<int>& main, std::vector<int>& pending, std::vector<int> arr) const;
-        void                binary_insertion(std::vector<int>& main_chain, std::vector<int>& pending) const;
+        void                trim(std::string& str) const;
         int                 jackobsthal_nums(int n) const;
         int                 get_jackobsthal_num(int num) const;
 
@@ -35,7 +32,7 @@ class PmergeMe
         PmergeMe& operator=(const PmergeMe& obj);
         ~PmergeMe();
 
-        PmergeMe(const char *nums);
+        PmergeMe(char *nums[]);
         template <typename T> void    print_elements( T& container ) const;
         void    fordJohnsonSort( void );
 };

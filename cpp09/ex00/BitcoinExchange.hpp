@@ -9,7 +9,6 @@
 #include <sstream>
 #include <ctime>
 #include <exception>
-#include <boost/algorithm/string.hpp>
 #include <cerrno>
 #include <cstdlib>
 
@@ -23,6 +22,7 @@ class BitcoinExchange
         bool    is_valid_rate(std::string rate) const;
         void    print_price(std::string date, float rate);
         void    read_database( void );
+        void    trim(std::string& str) const;
     public:
         BitcoinExchange();
         BitcoinExchange(const BitcoinExchange& obj);

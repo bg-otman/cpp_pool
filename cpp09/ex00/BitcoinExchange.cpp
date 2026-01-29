@@ -28,6 +28,21 @@ BitcoinExchange::BitcoinExchange(const char* input)
 {
 }
 
+void    BitcoinExchange::trim(std::string& str) const
+{
+    if (str.empty())
+        return ;
+    int i = 0;
+    while (str[i] && std::isspace(str[i])) ++i;
+    if (!str[i]){
+        str = "";
+        return ;
+    }
+    int j = str.length() - 1;
+    while (j > 0 && std::isspace(str[j])) --j;
+    str = str.substr(i, j - i + 1);
+}
+
 bool    BitcoinExchange::is_valid_date(std::string date) const
 {
     if (std::count(date.begin(), date.end(), '-') != 2)
@@ -39,7 +54,7 @@ bool    BitcoinExchange::is_valid_date(std::string date) const
     char* end;
     while (std::getline(str, token, '-'))
     {
-        boost::trim(token);
+        trim(token);
         if (i == 0)
             year = static_cast<int>(strtof(token.c_str(), &end));
         else if (i == 1)
@@ -81,7 +96,7 @@ bool   BitcoinExchange::is_valid_rate(std::string rate) const
 
 void    BitcoinExchange::print_price(std::string date, float rate)
 {
-    boost::trim(date);
+    trim(date);
     std::map<std::string, float>::iterator it_price = _data.lower_bound(date);
     if (it_price == _data.end() || it_price->first > date)
     {
@@ -125,7 +140,7 @@ void    BitcoinExchange::get_btc_price( void )
         throw std::runtime_error("Error: Invalid header in input file");
     while (std::getline(in_file, line))
     {
-        boost::trim(line);
+        trim(line);
         date = line.substr(0, line.find_first_of("|"));
         rate = line.substr(line.find_first_of("|") + 1);
         if (line.empty())

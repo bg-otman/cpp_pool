@@ -5,7 +5,7 @@ PmergeMe::PmergeMe()
 }
 
 PmergeMe::PmergeMe(const PmergeMe& obj)
-    : _vector(obj._vector), _deque(obj._deque), _nums(obj._nums)
+    : _vector(obj._vector), _deque(obj._deque)
 {
 }
 
@@ -15,7 +15,6 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& obj)
     {
         this->_vector = obj._vector;
         this->_deque = obj._deque;
-        this->_nums = obj._nums;
     }
     return (*this);
 }
@@ -24,28 +23,39 @@ PmergeMe::~PmergeMe()
 {
 }
 
-PmergeMe::PmergeMe(const char *nums)
-    : _nums(nums)
+PmergeMe::PmergeMe(char *nums[])
 {
-    if (_nums.empty())
-        throw std::runtime_error("Error");
-    std::stringstream stream(_nums);
-    std::string line;
+    std::string str;
     long nb = 0;
+    errno = 0;
     char *end;
-    while (std::getline(stream, line, ' '))
+    int i = 1;
+    while (nums[i])
     {
-		boost::trim(line);
-        if (line.empty())
-            continue;
-        nb = std::strtol(line.c_str(), &end, 10);
-        if (nb > INT_MAX || nb < INT_MIN || *end != '\0')
+        str = nums[i++];
+		trim(str);
+        nb = std::strtol(str.c_str(), &end, 10);
+        if (str.empty() || nb > INT_MAX || nb < INT_MIN
+            || errno == ERANGE || *end != '\0' || nb < 0)
             throw std::runtime_error("Error");
-        else if (nb < 0)
-            throw std::runtime_error("Error: only positive number allowed");
         _vector.push_back(static_cast<int>(nb));
         _deque.push_back(static_cast<int>(nb));
     }
+}
+
+void    PmergeMe::trim(std::string& str) const
+{
+    if (str.empty())
+        return ;
+    int i = 0;
+    while (str[i] && std::isspace(str[i])) ++i;
+    if (!str[i]){
+        str = "";
+        return ;
+    }
+    int j = str.length() - 1;
+    while (j > 0 && std::isspace(str[j])) --j;
+    str = str.substr(i, j - i + 1);
 }
 
 int PmergeMe::jackobsthal_nums(int n) const
